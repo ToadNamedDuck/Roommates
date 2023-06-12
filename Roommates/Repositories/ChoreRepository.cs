@@ -138,5 +138,22 @@ namespace Roommates.Repositories
                 }
             }
         }
+        public void Update(Chore chore)
+        {
+            using(SqlConnection connection = Connection)
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = @"Update Chore
+                                        Set Name = @name
+                                        where Id = @id";
+                    cmd.Parameters.AddWithValue("@name", chore.Name);
+                    cmd.Parameters.AddWithValue("@id", chore.Id);
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("Chore has been updated.");
+                }
+            }
+        }
     }
 }

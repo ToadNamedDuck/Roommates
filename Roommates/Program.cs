@@ -164,6 +164,25 @@ namespace Roommates
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                         break;
+                    case ("Update a chore"):
+                        List<Chore> updateChores = choreRepo.GetAll();
+                        Console.WriteLine("Select a chore to update/rename.");
+                        foreach(Chore chore in updateChores)
+                        {
+                            Console.WriteLine($"{chore.Id} - {chore.Name}");
+                        }
+                        int updateChoreId = int.Parse(Console.ReadLine());
+                        Console.WriteLine($"Type the name you would like to replace '{updateChores.Where(i => i.Id == updateChoreId).Select(i => i.Name).FirstOrDefault()}' with.");
+                        string updateChoreName = Console.ReadLine();
+                        Chore updatedChore = new Chore()
+                        {
+                            Name = updateChoreName,
+                            Id = updateChoreId
+                        };
+                        choreRepo.Update(updatedChore);
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break;
                 }
             }
 
@@ -181,12 +200,13 @@ namespace Roommates
                 "Show all chores",
                 "Search for chore by ID",
                 "Add a chore",
-                "Exit",
                 "Select a Roommate by ID",
                 "View unassigned chores",
                 "Assign a chore",
                 "Update a room",
-                "Delete a room"
+                "Delete a room",
+                "Update a chore",
+                "Exit"
             };
 
             for (int i = 0; i < options.Count; i++)
